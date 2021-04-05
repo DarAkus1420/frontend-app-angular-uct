@@ -2,36 +2,51 @@
   <a class="navbar-brand" href="/">Ejemplo CRUD</a>
 </nav>
 
-<div class="card mt-4">
-  <div class="card-body">
-    <div class="card-title">Ficha Producto</div>
-    <div class="form-group">
-      <input
-        type="text"
-        [(ngModel)]="prodSeleccionado.nombre"
-        placeholder="Nombre: "
-      />
-    </div>
-    <div class="form-group">
-      <input
-        type="text"
-        [(ngModel)]="prodSeleccionado.stock"
-        placeholder="Stock: "
-      />
-    </div>
-    <button (click)="actualizar()" class="btn btn-primary">Actualizar</button>
-  </div>
-</div>
-
 <div class="container">
   <div class="row">
-    <div class="list-group mt-4">
-      <li
-        *ngFor="let prod of listaProductos"
-        class="list-group-item list-group-item-action"
-      >
-        <span class="badge badge-primary">{{ prod.id }}</span> {{ prod.nombre }}
-      </li>
+    <div clas="col">
+      <div class="card mt-4">
+        <div class="card-body">
+          <div class="card-title">Ficha Producto</div>
+          <div class="form-group">
+            <input
+              type="text"
+              [(ngModel)]="prodSeleccionado.nombre"
+              placeholder="Nombre: "
+            />
+          </div>
+          <div class="form-group">
+            <input
+              type="text"
+              [(ngModel)]="prodSeleccionado.stock"
+              placeholder="Stock: "
+            />
+          </div>
+          <button (click)="actualizar()" class="btn btn-primary">
+            Actualizar
+          </button>
+          <button
+            *ngIf="prodSeleccionado.id"
+            class="btn btn-danger"
+            (click)="eliminar()"
+          >
+            Eliminar
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="list-group mt-4">
+        <li
+          *ngFor="let prod of listaProductos"
+          class="list-group-item list-group-item-action"
+          (click)="editar(prod)"
+          [class.active]="prod == prodSeleccionado"
+        >
+          <span class="badge badge-primary">{{ prod.id }}</span>
+          {{ prod.nombre }}
+        </li>
+      </div>
     </div>
   </div>
 </div>

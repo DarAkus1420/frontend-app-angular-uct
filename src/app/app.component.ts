@@ -16,8 +16,27 @@ export class AppComponent {
   ];
   prodSeleccionado: Producto = new Producto();
   actualizar() {
-    this.prodSeleccionado.id = this.listaProductos.length + 1;
-    this.listaProductos.push(this.prodSeleccionado);
+    if (!this.prodSeleccionado.id && this.listaProductos.length != 0) {
+      this.prodSeleccionado.id =
+        this.listaProductos[this.listaProductos.length - 1].id + 1;
+      this.listaProductos.push(this.prodSeleccionado);
+    } else {
+      this.prodSeleccionado.id = 0;
+      this.listaProductos.push(this.prodSeleccionado);
+    }
     this.prodSeleccionado = new Producto();
+  }
+
+  editar(prod: Producto) {
+    this.prodSeleccionado = prod;
+  }
+
+  eliminar() {
+    if (confirm('¿Realmente desea eliminar?')) {
+      this.listaProductos = this.listaProductos.filter(
+        (prod) => prod != this.prodSeleccionado
+      );
+      this.prodSeleccionado = new Producto();
+    }
   }
 }
