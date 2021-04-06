@@ -11,7 +11,7 @@
           <div class="form-group">
             <input
               type="text"
-              [(ngModel)]="prodSeleccionado.nombre"
+              [(ngModel)]="prodSeleccionado.name"
               placeholder="Nombre: "
             />
           </div>
@@ -44,7 +44,7 @@
           [class.active]="prod == prodSeleccionado"
         >
           <span class="badge badge-primary">{{ prod.id }}</span>
-          {{ prod.nombre }}
+          {{ prod.name }}
         </li>
       </div>
     </div>

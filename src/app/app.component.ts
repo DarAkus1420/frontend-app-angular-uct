@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Producto } from './modelos/producto';
+import { ApiService } from './services/api.service';
 
 @Component({
   selector: 'app-root',
@@ -7,36 +8,54 @@ import { Producto } from './modelos/producto';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  listaProductos: Producto[] = [
-    { id: 1, nombre: 'Notebook', stock: 45 },
-    { id: 2, nombre: 'Tablet', stock: 12 },
-    { id: 3, nombre: 'Disco Externo', stock: 20 },
-    { id: 4, nombre: 'Impresora Laser', stock: 18 },
-    { id: 5, nombre: 'Impresora 3D', stock: 2 },
-  ];
+  listaProductos: Producto[];
   prodSeleccionado: Producto = new Producto();
+
+  constructor(private apiService: ApiService) {}
+
+  getProducts(): void {
+    this.apiService.getProducts().subscribe((response) => {
+      this.listaProductos = response.data.products;
+    });
+  }
+
+  //De momento estos medotos no haran nada, ya que aun no implemento el crud completo en angular
+
+  // actualizar() {
+  //   if (!this.prodSeleccionado.id && this.listaProductos.length != 0) {
+  //     this.prodSeleccionado.id =
+  //       this.listaProductos[this.listaProductos.length - 1].id + 1;
+  //     this.listaProductos.push(this.prodSeleccionado);
+  //   } else {
+  //     this.prodSeleccionado.id = 0;
+  //     this.listaProductos.push(this.prodSeleccionado);
+  //   }
+  //   this.prodSeleccionado = new Producto();
+  // }
+
+  // editar(prod: Producto) {
+  //   this.prodSeleccionado = prod;
+  // }
+
+  // eliminar() {
+  //   if (confirm('¿Realmente desea eliminar?')) {
+  //     this.listaProductos = this.listaProductos.filter(
+  //       (prod) => prod != this.prodSeleccionado
+  //     );
+  //     this.prodSeleccionado = new Producto();
+  //   }
+  // }
+
   actualizar() {
-    if (!this.prodSeleccionado.id && this.listaProductos.length != 0) {
-      this.prodSeleccionado.id =
-        this.listaProductos[this.listaProductos.length - 1].id + 1;
-      this.listaProductos.push(this.prodSeleccionado);
-    } else {
-      this.prodSeleccionado.id = 0;
-      this.listaProductos.push(this.prodSeleccionado);
-    }
-    this.prodSeleccionado = new Producto();
+    this.apiService.addProduct(this.prodSeleccionado).subscribe((response) => {
+      this.getProducts();
+      console.log(response);
+    });
   }
 
-  editar(prod: Producto) {
-    this.prodSeleccionado = prod;
-  }
-
-  eliminar() {
-    if (confirm('¿Realmente desea eliminar?')) {
-      this.listaProductos = this.listaProductos.filter(
-        (prod) => prod != this.prodSeleccionado
-      );
-      this.prodSeleccionado = new Producto();
-    }
+  editar(prod: Producto) {}
+  eliminar() {}
+  ngOnInit() {
+    this.getProducts();
   }
 }
