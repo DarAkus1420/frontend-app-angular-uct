@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Producto } from './modelos/producto';
+import { Brand } from './modelos/brand';
 import { ApiService } from './services/api.service';
+import { BrandComponent } from './brand/brand.component';
 
 @Component({
   selector: 'app-root',
@@ -8,14 +10,24 @@ import { ApiService } from './services/api.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
+  @ViewChild(BrandComponent) brandComponent;
   listaProductos: Producto[];
   prodSeleccionado: Producto = new Producto();
+  brands: Brand[];
+  selectedBrand: Brand;
 
   constructor(private apiService: ApiService) {}
 
   getProducts(): void {
     this.apiService.getProducts().subscribe((response) => {
       this.listaProductos = response.data.products;
+    });
+  }
+
+  getBrands(): void {
+    this.apiService.getBrands().subscribe((response) => {
+      this.brandComponent.brands = response.data.brands;
+      //Seteado select por defecto
     });
   }
 
@@ -49,13 +61,18 @@ export class AppComponent {
   actualizar() {
     this.apiService.addProduct(this.prodSeleccionado).subscribe((response) => {
       this.getProducts();
-      console.log(response);
     });
   }
 
   editar(prod: Producto) {}
   eliminar() {}
   ngOnInit() {
+    this.getBrands();
+    this.prodSeleccionado.brandId = -1;
     this.getProducts();
+  }
+
+  ngOnChanges() {
+    this.brands = this.brandComponent.brands;
   }
 }

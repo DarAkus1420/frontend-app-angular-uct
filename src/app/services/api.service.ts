@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Producto } from '../modelos/producto';
+import { Brand } from '../modelos/brand';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -18,6 +19,15 @@ interface Config {
   success: Boolean;
   data: {
     [key: string]: Producto[];
+  };
+  messages: String;
+  code: number;
+}
+
+interface ConfigBrands {
+  success: Boolean;
+  data: {
+    [key: string]: Brand[];
   };
   messages: String;
   code: number;
@@ -43,5 +53,15 @@ export class ApiService {
   public addProduct(product: Producto): Observable<Producto> {
     const url = `${this.apiUrl}/product`;
     return this.http.post<Producto>(url, product, httpOptions);
+  }
+
+  public getBrands(): Observable<ConfigBrands> {
+    const url = `${this.apiUrl}/brands`;
+    return this.http.get<ConfigBrands>(url);
+  }
+
+  public addBrand(brand: Brand): Observable<Brand> {
+    const url = `${this.apiUrl}/brand`;
+    return this.http.post<Producto>(url, brand, httpOptions);
   }
 }
