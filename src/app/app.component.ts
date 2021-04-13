@@ -58,14 +58,15 @@ export class AppComponent {
   //   }
   // }
 
-  actualizar() {
+  insert() {
     this.apiService.addProduct(this.prodSeleccionado).subscribe((response) => {
       this.getProducts();
     });
   }
 
-  editar(prod: Producto) {}
-  eliminar() {}
+  delete(id: Number) {
+    console.log(`Eliminando ${id}`);
+  }
   ngOnInit() {
     this.getBrands();
     this.prodSeleccionado.brandId = -1;

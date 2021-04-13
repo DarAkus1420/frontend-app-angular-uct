@@ -30,6 +30,10 @@ export class BrandComponent implements OnInit {
       this.getBrands();
     });
   }
+  delete(id: Number) {
+    // console.log('hoal');
+    console.log(`Eliminando ${id}`);
+  }
 
   ngOnInit(): void {
     this.getBrands();
