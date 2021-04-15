@@ -33,6 +33,13 @@ interface ConfigBrands {
   code: number;
 }
 
+interface ConfigResponse {
+  success: Boolean;
+  data: {};
+  messages: String;
+  code: number;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -55,6 +62,11 @@ export class ApiService {
     return this.http.post<Producto>(url, product, httpOptions);
   }
 
+  public deleteProduct(id: Number) {
+    const url = `${this.apiUrl}/product/${id}`;
+    return this.http.delete<ConfigResponse>(url);
+  }
+
   public getBrands(): Observable<ConfigBrands> {
     const url = `${this.apiUrl}/brands`;
     return this.http.get<ConfigBrands>(url);
@@ -63,5 +75,10 @@ export class ApiService {
   public addBrand(brand: Brand): Observable<Brand> {
     const url = `${this.apiUrl}/brand`;
     return this.http.post<Producto>(url, brand, httpOptions);
+  }
+
+  public deleteBrand(id: Number) {
+    const url = `${this.apiUrl}/brand/${id}`;
+    return this.http.delete<ConfigResponse>(url);
   }
 }

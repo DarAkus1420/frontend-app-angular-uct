@@ -33,6 +33,11 @@ export class BrandComponent implements OnInit {
   delete(id: Number) {
     // console.log('hoal');
     console.log(`Eliminando ${id}`);
+    this.apiService.deleteBrand(id).subscribe((response) => {
+      console.log(response);
+      this.getBrands();
+      this.parent.getProducts();
+    });
   }
 
   ngOnInit(): void {

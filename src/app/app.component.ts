@@ -66,6 +66,10 @@ export class AppComponent {
 
   delete(id: Number) {
     console.log(`Eliminando ${id}`);
+    this.apiService.deleteProduct(id).subscribe((response) => {
+      console.log(response);
+      this.getProducts();
+    });
   }
   ngOnInit() {
     this.getBrands();
@@ -75,5 +79,6 @@ export class AppComponent {
 
   ngOnChanges() {
     this.brands = this.brandComponent.brands;
+    console.log(this.brands, 'brands');
   }
 }

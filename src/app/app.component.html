@@ -42,7 +42,7 @@
             <tr *ngFor="let prod of listaProductos">
               <th>{{prod.id}}</th>
               <td>{{prod.name}}</td>
-              <td>{{prod.Brand.name}}</td>
+              <td>{{prod.Brand ? prod.Brand.name : 'Brand doesn\'t exist'}}</td>
               <td>{{prod.stock}}</td>
               <td class="text-right">
                 <button class="btn btn-danger pull-right" (click)="delete(prod.id)">Delete</button>
